@@ -1057,7 +1057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowPreviewTrajectory: 0
-  StepCount: 2979
+  StepCount: 796
   Subject: {fileID: 46599600}
 --- !u!4 &1573439146
 Transform:
