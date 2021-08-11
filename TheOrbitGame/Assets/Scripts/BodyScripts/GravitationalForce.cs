@@ -162,7 +162,7 @@ public class GravitationalForce : MonoBehaviour
 
     }
 
-    public void CalculateNewFutureVelocity(List<NewTrajectoryProperies> AllBodies)
+    public void CalculateNewFutureVelocity(List<NewTrajectoryProperies> AllBodies, int Multiplier)
     {
 
 
@@ -183,18 +183,18 @@ public class GravitationalForce : MonoBehaviour
 
             }
 
-            FutureVelocity = FutureVelocity + ResultantAcceleration * Time.fixedDeltaTime;
+            FutureVelocity = FutureVelocity + ResultantAcceleration * Time.fixedDeltaTime * Multiplier;
         }
 
     }
 
-    public void CalculateNewFuturePosition(GravitationalForce Subject, int Index)
+    public void CalculateNewFuturePosition(GravitationalForce Subject, int Index, int Multiplier)
     {
         if (!CollisionDetected)
         {
 
 
-            FuturePosition = FuturePosition + FutureVelocity * Time.fixedDeltaTime;
+            FuturePosition = FuturePosition + FutureVelocity * Time.fixedDeltaTime * Multiplier;
             if (Subject != null)
             {
                 FuturePosition = FuturePosition - Subject.GetTrajectoryVelocityAtIndex(Index) * Time.fixedDeltaTime;

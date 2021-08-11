@@ -121,9 +121,9 @@ public class BodiesController : MonoBehaviour
 
             }
 
-            NewBody.CalculateNewFutureVelocity(PreviousBodiesTrajectoryProperties);
+            NewBody.CalculateNewFutureVelocity(PreviousBodiesTrajectoryProperties, 1);
 
-            NewBody.CalculateNewFuturePosition(Subject, i);
+            NewBody.CalculateNewFuturePosition(Subject, i, 1);
 
             NewBody.SetCollisionPositions(-1);
 
@@ -149,7 +149,7 @@ public class BodiesController : MonoBehaviour
             {
                 Body.GetBodyScript().MoveIfCollided();
 
-                
+
             }
 
             if (NewBody.IsCollided())
@@ -159,7 +159,59 @@ public class BodiesController : MonoBehaviour
         }
     }
 
-   
+    public static void InitialiseApproximateFutureTrajectory(int Steps, GravitationalForce Subject, GravitationalForce NewBody , int Multiplier)
+    {
+        for (int i = 0; i < Steps; i+= Multiplier)
+        {
+            List<NewTrajectoryProperies> PreviousBodiesTrajectoryProperties = new List<NewTrajectoryProperies>();
+            foreach (BodyProperties Body in AllBodies)
+            {
+                if (!Body.GetBodyObject().CompareTag("Weapon") && !Body.GetBodyScript().IsCollidedAtIndex(i))
+                {
+                    PreviousBodiesTrajectoryProperties.Add(Body.GetBodyScript().GetTrajectoryPropertiesAtIndex(i));
+                }
+
+            }
+
+            NewBody.CalculateNewFutureVelocity(PreviousBodiesTrajectoryProperties, Multiplier);
+
+            NewBody.CalculateNewFuturePosition(Subject, i, Multiplier);
+
+            NewBody.SetCollisionPositions(-1);
+
+            foreach (BodyProperties Body in AllBodies)
+            {
+                if (Body.GetBodyScript() != NewBody && !Body.GetBodyScript().IsCollidedAtIndex(i))
+                {
+                    Body.GetBodyScript().SetCollisionPositions(i);
+                }
+
+
+            }
+            Physics2D.SyncTransforms();
+            NewBody.CheckForCollisions();
+            foreach (BodyProperties Body in AllBodies)
+            {
+
+                Body.GetBodyScript().CheckForCollisions();
+
+            }
+            NewBody.MoveIfCollided();
+            foreach (BodyProperties Body in AllBodies)
+            {
+                Body.GetBodyScript().MoveIfCollided();
+
+
+            }
+
+            if (NewBody.IsCollided())
+            {
+                i = Steps;
+            }
+        }
+    }
+
+
     private static int StepsCount = 0;
     private bool TrajectoriesToBeCleared = false;
     void FixedUpdate()
@@ -167,53 +219,53 @@ public class BodiesController : MonoBehaviour
 
         foreach (BodyProperties Body in AllBodies)
         {
-          
-                Body.GetBodyScript().CalculateFutureVelocity();
-           
-          
+
+            Body.GetBodyScript().CalculateFutureVelocity();
+
+
         }
         foreach (BodyProperties Body in AllBodies)
         {
-          
-                Body.GetBodyScript().CalculateFuturePosition(ActualSubject);
-                Body.GetBodyScript().SetCollisionPositions(-1);
-            
+
+            Body.GetBodyScript().CalculateFuturePosition(ActualSubject);
+            Body.GetBodyScript().SetCollisionPositions(-1);
+
         }
         Physics2D.SyncTransforms();
         foreach (BodyProperties Body in AllBodies)
         {
-           
-                Body.GetBodyScript().CheckForCollisions();
-            
+
+            Body.GetBodyScript().CheckForCollisions();
+
         }
 
         foreach (BodyProperties Body in AllBodies)
         {
-            
 
-                Body.GetBodyScript().MoveIfCollided();
-                Body.GetBodyScript().UpdatePosition();
-            
+
+            Body.GetBodyScript().MoveIfCollided();
+            Body.GetBodyScript().UpdatePosition();
+
         }
 
         for (int i = 0; i < AllBodies.Count; i++)
         {
             if (AllBodies[i].GetBodyScript().RemoveIfDestroyed())
-                
+
             {
-                 i--;
-            } 
+                i--;
+            }
         }
-        
+
 
         if (Input.GetMouseButton(0))// Input.GetMouseButton(0)
         {
-            if (StepsCount < 500)
+            if (StepsCount < ActualMaxSteps)
             {
                 StepsCount++;
             }
 
-            //StepsCount = 500;
+            StepsCount = ActualMaxSteps;
             foreach (BodyProperties Body in AllBodies)
             {
 
@@ -234,9 +286,9 @@ public class BodiesController : MonoBehaviour
             StepsCount = 0;
             foreach (BodyProperties Body in AllBodies)
             {
-                
-                    Body.GetBodyScript().ResetPrediction();
-               
+
+                Body.GetBodyScript().ResetPrediction();
+
             }
 
             TrajectoriesToBeCleared = false;
@@ -256,21 +308,27 @@ public class BodiesController : MonoBehaviour
         BodyScript.InitialisePredictionBody();
         if (Body.CompareTag("Weapon"))
         {
-            InitialiseFutureTrajectory(ActualMaxSteps, ActualSubject, BodyScript);
+            
+
+            if (!Aiming)
+            {
+                InitialiseFutureTrajectory(ActualMaxSteps, ActualSubject, BodyScript);
+                AllBodies.Add(new BodyProperties(Body, Body.GetComponent<Rigidbody2D>(),
+                   Body.GetComponent<GravitationalForce>()));
+         
+            }
+            else
+            {
+                InitialiseApproximateFutureTrajectory(ActualMaxSteps, ActualSubject, BodyScript, 10);
+                BodyScript.DrawTrajectory(StepsCount, true);
+            }
+
         }
 
-        if (!Aiming)
-        {
-            AllBodies.Add(new BodyProperties(Body, Body.GetComponent<Rigidbody2D>(),
-               Body.GetComponent<GravitationalForce>()));
-        }
-        else {
-            BodyScript.DrawTrajectory(StepsCount, true);
-    }
 
-       
 
-        
+
+
         // Debug.Log(AllBodies.Count);
 
     }
@@ -279,7 +337,7 @@ public class BodiesController : MonoBehaviour
     public static void RemoveBody(GameObject Body)
     {
 
-        for (int i = AllBodies.Count-1; i >= 0; i--)
+        for (int i = AllBodies.Count - 1; i >= 0; i--)
         {
             if (AllBodies[i].GetBodyObject() == Body)
             {

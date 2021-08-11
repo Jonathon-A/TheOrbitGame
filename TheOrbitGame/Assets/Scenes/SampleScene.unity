@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Subject: {fileID: 46599600}
-  MaxSteps: 200
+  MaxSteps: 500
 --- !u!4 &190187231
 Transform:
   m_ObjectHideFlags: 0
