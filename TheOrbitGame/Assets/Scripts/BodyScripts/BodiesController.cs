@@ -6,6 +6,7 @@ public class BodiesController : MonoBehaviour
 {
     private static List<BodyProperties> AllBodies = new List<BodyProperties>();
 
+
     public GameObject Subject;
     public int MaxSteps;
     private static int ActualMaxSteps;
@@ -260,12 +261,16 @@ public class BodiesController : MonoBehaviour
 
         if (Input.GetMouseButton(0))// Input.GetMouseButton(0)
         {
-            if (StepsCount < ActualMaxSteps)
+            if (StepsCount < ActualMaxSteps && Input.GetKey("w"))
             {
                 StepsCount++;
             }
+            if (StepsCount > 0 && Input.GetKey("s"))
+            {
+                StepsCount--;
+            }
 
-            StepsCount = ActualMaxSteps;
+            //  StepsCount = ActualMaxSteps;
             foreach (BodyProperties Body in AllBodies)
             {
 
@@ -319,7 +324,7 @@ public class BodiesController : MonoBehaviour
             }
             else
             {
-                InitialiseApproximateFutureTrajectory(ActualMaxSteps, ActualSubject, BodyScript, 10);
+                InitialiseApproximateFutureTrajectory(ActualMaxSteps, ActualSubject, BodyScript, 1);
                 BodyScript.DrawTrajectory(StepsCount, true);
             }
 

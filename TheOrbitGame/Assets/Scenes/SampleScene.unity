@@ -237,7 +237,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 74.916695
+  m_Mass: 37.458347
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -278,7 +278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 50
-  SurfaceGravitationalFieldStrength: 2
+  SurfaceGravitationalFieldStrength: 1
+  Mass: 37.458347
 --- !u!1 &190187229
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &424318415
 Transform:
   m_ObjectHideFlags: 0
@@ -426,7 +427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424318414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -200, y: 0.5, z: 0}
+  m_LocalPosition: {x: -130, y: 0.5, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 1379888309}
@@ -445,7 +446,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 8
-  SurfaceGravitationalFieldStrength: 0
+  SurfaceGravitationalFieldStrength: 0.005
+  Mass: 4.797601e+17
 --- !u!114 &424318418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223c3dfc8415f5048bb2b4bde97901f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialVelocity: {x: 0, y: 3.5}
+  InitialVelocity: {x: 0, y: 1.018}
   BodyHealth: 1
   BodyInvincible: 0
   BodyDamage: 1
@@ -493,7 +495,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 1000000
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -620,7 +622,7 @@ Camera:
   far clip plane: 1000
   field of view: 26.991467
   orthographic: 1
-  orthographic size: 200
+  orthographic size: 400
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -695,7 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MinSize: 20
-  MaxSize: 200
+  MaxSize: 400
   ZoomStep: 10
 --- !u!1 &630931524
 GameObject:
@@ -727,7 +729,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 630931524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -100, y: 0, z: 0}
+  m_LocalPosition: {x: -200, y: 0, z: 0}
   m_LocalScale: {x: 25, y: 25, z: 1}
   m_Children: []
   m_Father: {fileID: 1379888309}
@@ -745,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223c3dfc8415f5048bb2b4bde97901f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialVelocity: {x: 0, y: 7.5}
+  InitialVelocity: {x: 0, y: 3.57}
   BodyHealth: 3
   BodyInvincible: 0
   BodyDamage: 3
@@ -780,7 +782,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 9.364587
+  m_Mass: 0.9364587
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -853,7 +855,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 25
-  SurfaceGravitationalFieldStrength: 1
+  SurfaceGravitationalFieldStrength: 0.1
+  Mass: 0.9364587
 --- !u!114 &630931532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,7 +1060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowPreviewTrajectory: 0
-  StepCount: 796
+  StepCount: 11180
   Subject: {fileID: 46599600}
 --- !u!4 &1573439146
 Transform:
@@ -1102,6 +1105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670076c10cfbc704f90ab1587a16abd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Sensitivity: 0.5
   LR: {fileID: 971944676}
   InitialRocket: {fileID: 5237266194687964876, guid: 539e40e8a37366b4bb8ce8612378acf1, type: 3}
 --- !u!4 &1689699135
@@ -1180,6 +1184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Radius: 29.47
   SurfaceGravitationalFieldStrength: 0.2
+  Mass: 0
 --- !u!114 &1867311008
 MonoBehaviour:
   m_ObjectHideFlags: 0

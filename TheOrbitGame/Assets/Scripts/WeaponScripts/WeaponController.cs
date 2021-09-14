@@ -37,6 +37,8 @@ public class WeaponController : MonoBehaviour
     private static Vector2 LaunchVector = Vector2.zero;
     private static Vector3 Position;
     private static Vector2 Velocity;
+    
+    public float Sensitivity;
 
     private Vector3 DragOrigin;
     void Update()
@@ -48,7 +50,7 @@ public class WeaponController : MonoBehaviour
 
         if (Input.GetMouseButton(0) && LaunchBody)
         {
-            Vector3 Difference = DragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 Difference = (DragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition)) * Sensitivity;
             // print("origin" + DragOrigin + " newPosition " + Cam.ScreenToWorldPoint(Input.mousePosition) + " = difference " + Difference);
 
           
@@ -56,7 +58,7 @@ public class WeaponController : MonoBehaviour
 
             Vector3 LaunchVector3 = -Difference;
 
-            LaunchVector = new Vector2(LaunchVector3.x, LaunchVector3.y);
+            LaunchVector = new Vector2(LaunchVector3.x, LaunchVector3.y) + BodyVelocity;
             //Debug.Log(LaunchBody.name + " " + LaunchVector.magnitude);
 
             Position = new Vector3(LaunchBody.transform.position.x, LaunchBody.transform.position.y, 0) + new Vector3(LaunchVector.x, LaunchVector.y, 0).normalized * (Radius + LaunchOffset);
@@ -156,8 +158,8 @@ public class WeaponController : MonoBehaviour
         LaunchedAimRocket.GetComponent<GravitationalForce>().InitialVelocity = InitialVelocity;
         LaunchedAimRocket.GetComponent<SpriteRenderer>().enabled = false;
 
+       // BodiesController.AddBody(LaunchedAimRocket, true);
         BodiesController.AddBody(LaunchedAimRocket, true);
-       
 
     }
 }

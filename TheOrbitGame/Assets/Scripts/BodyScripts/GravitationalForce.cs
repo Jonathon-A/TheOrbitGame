@@ -357,7 +357,7 @@ public class GravitationalForce : MonoBehaviour
                 PredictionBody.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             }
         }
-
+        LR.positionCount = 0;
         LR.positionCount = Steps + 1;
         LR.SetPosition(0, new Vector3(ThisBody.position.x, ThisBody.position.y, 5));
 
